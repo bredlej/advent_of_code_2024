@@ -42,7 +42,7 @@ TEST_F(Day1Test, Accumulates_Distance) {
         {3, 3},
     };
 
-    ASSERT_EQ(11, accumulated_abs_difference(sorted_uint_columns(locs)));
+    ASSERT_EQ(11, accumulated_distance(sorted_uint_columns(locs)));
 }
 
 TEST_F(Day1Test, Accumulates_Similarity) {
@@ -55,7 +55,7 @@ TEST_F(Day1Test, Accumulates_Similarity) {
         {3, 3},
     };
 
-    ASSERT_EQ(31, total_similarity_score(sorted_uint_columns(locs)));
+    ASSERT_EQ(31, accumulated_similarity_score(sorted_uint_columns(locs)));
 }
 
 int main(int ac, char *av[]) {

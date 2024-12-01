@@ -6,7 +6,7 @@
 #include <cstdio>
 
 int main() {
-    std::printf("Accumulated distance is: %u\n", accumulated_abs_difference(sorted_uint_columns(input)));
-    std::printf("Similarity score: %u\n", total_similarity_score(sorted_uint_columns(input)));
+    std::printf("Accumulated distance is: %u\n", accumulated_distance(sorted_uint_columns(input)));
+    std::printf("Similarity score: %u\n", accumulated_similarity_score(sorted_uint_columns(input)));
     return 0;
 }
