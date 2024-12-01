@@ -8,7 +8,7 @@
 #include <cstdint>
 
 
-const std::vector<std::pair<uint32_t, uint32_t> > input = {
+constexpr std::initializer_list<std::pair<uint32_t, uint32_t> > input = {
     {64430, 75582},
     {87936, 20843},
     {98310, 72035},
