@@ -11,7 +11,7 @@
 #include <type_traits>
 
 template <typename T>
-concept Numeric = std::is_arithmetic_v<T>;
+concept NumericT = std::is_arithmetic_v<T>;
 
 /**
  * @brief Computes the absolute difference between two numbers.
@@ -19,7 +19,7 @@ concept Numeric = std::is_arithmetic_v<T>;
  * @param pair_of_numbers A pair of two numbers.
  * @return The absolute difference between the two numbers.
  */
-template<Numeric T>
+template<NumericT T>
 constexpr T abs_difference_between_numbers(const std::pair<T, T> &pair_of_numbers) {
     if constexpr (std::is_floating_point_v<T>) {
         return std::abs(pair_of_numbers.first - pair_of_numbers.second);
@@ -37,7 +37,7 @@ constexpr T abs_difference_between_numbers(const std::pair<T, T> &pair_of_number
  * @param pair_of_numbers A vector of pairs of numbers.
  * @return A pair containing two vectors with sorted numbers.
  */
-template<Numeric T>
+template<NumericT T>
 constexpr std::pair<std::vector<T>, std::vector<T> > sorted_vectors_from_number_pairs_t(const std::initializer_list<std::pair<T, T> > &pair_of_numbers) {
     std::vector<T> first;
     std::vector<T> second;
@@ -54,7 +54,7 @@ constexpr std::pair<std::vector<T>, std::vector<T> > sorted_vectors_from_number_
 /**
 * @brief Helper function to deduce the template argument for sorted_number_columns_from_pairs_t
 */
-template<Numeric T>
+template<NumericT T>
 constexpr std::pair<std::vector<T>, std::vector<T> > sorted_vectors_from_number_pairs(const std::initializer_list<std::pair<T, T> > &pair_of_numbers) {
     return sorted_vectors_from_number_pairs_t<T>(pair_of_numbers);
 }
@@ -65,7 +65,7 @@ constexpr std::pair<std::vector<T>, std::vector<T> > sorted_vectors_from_number_
  * @param pair_of_number_vectors A pair of vectors containing the columns of numbers.
  * @return The accumulated distance.
  */
-template <Numeric T>
+template <NumericT T>
 constexpr T accumulated_distance_t(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
     return std::accumulate(pair_of_number_vectors.first.begin(), pair_of_number_vectors.first.end(), T{0},
                            [&pair_of_number_vectors, col_idx = 0u](const T sum, T val) mutable {
@@ -76,7 +76,7 @@ constexpr T accumulated_distance_t(const std::pair<std::vector<T>, std::vector<T
 /**
  * @brief Helper function to deduce the template argument for accumulated_distance_t
  */
-template<Numeric T>
+template<NumericT T>
 constexpr T accumulated_distance(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
     return accumulated_distance_t<T>(pair_of_number_vectors);
 }
@@ -87,7 +87,7 @@ constexpr T accumulated_distance(const std::pair<std::vector<T>, std::vector<T> 
  * @param pair_of_number_vectors A pair of vectors containing the columns of numbers.
  * @return The accumulated similarity score.
  */
-template <Numeric T>
+template <NumericT T>
 constexpr T accumulated_similarity_score_t(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
     return std::accumulate(pair_of_number_vectors.first.begin(), pair_of_number_vectors.first.end(), T{0},
                            [&pair_of_number_vectors](const T sum, const T val) {
@@ -98,7 +98,7 @@ constexpr T accumulated_similarity_score_t(const std::pair<std::vector<T>, std::
 /**
  * @brief Helper function to deduce the template argument for accumulated_similarity_score_t
  */
-template<Numeric T>
+template<NumericT T>
 constexpr T accumulated_similarity_score(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
     return accumulated_similarity_score_t<T>(pair_of_number_vectors);
 }
