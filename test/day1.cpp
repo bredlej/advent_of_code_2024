@@ -11,7 +11,7 @@ protected:
 
 TEST_F(Day1Test, Calculates_Distance_Between_Locations) {
 
-    ASSERT_EQ(1, abs_difference_between_uints({1, 2}));
+    ASSERT_EQ(1, abs_difference_between_numbers<uint32_t>({1, 2}));
 }
 
 TEST_F(Day1Test, Sorts_Locations) {
@@ -21,7 +21,7 @@ TEST_F(Day1Test, Sorts_Locations) {
         {1, 2}
     };
 
-    const auto [first, second] = sorted_uint_columns(locs);
+    const auto [first, second] = sorted_number_columns_from_pairs(locs);
 
     ASSERT_EQ(1, first[0]);
     ASSERT_EQ(2, first[1]);
@@ -42,7 +42,7 @@ TEST_F(Day1Test, Accumulates_Distance) {
         {3, 3},
     };
 
-    ASSERT_EQ(11, accumulated_distance(sorted_uint_columns(locs)));
+    ASSERT_EQ(11, accumulated_distance<uint32_t>(sorted_number_columns_from_pairs(locs)));
 }
 
 TEST_F(Day1Test, Accumulates_Similarity) {
@@ -55,7 +55,7 @@ TEST_F(Day1Test, Accumulates_Similarity) {
         {3, 3},
     };
 
-    ASSERT_EQ(31, accumulated_similarity_score(sorted_uint_columns(locs)));
+    ASSERT_EQ(31, accumulated_similarity_score<uint32_t>(sorted_number_columns_from_pairs(locs)));
 }
 
 int main(int ac, char *av[]) {

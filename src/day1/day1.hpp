@@ -7,35 +7,32 @@
 #include <algorithm>
 #include <numeric>
 #include <__algorithm/ranges_sort.h>
-
-#include <cstdint>
 #include <utility>
 #include <vector>
 
-using PairOfUnsignedInt = std::pair<uint32_t, uint32_t>;
-using TwoUnsignedIntColumns = std::pair<std::vector<uint32_t>, std::vector<uint32_t> >;
-
 /**
- * @brief Computes the absolute difference between two unsigned integers.
+ * @brief Computes the absolute difference between two numbers.
  *
- * @param uint_pair A pair of unsigned integers.
- * @return The absolute difference between the two integers.
+ * @param pair_of_numbers A pair of two numbers.
+ * @return The absolute difference between the two numbers.
  */
-constexpr uint32_t abs_difference_between_uints(const PairOfUnsignedInt &uint_pair) {
-    return std::abs(static_cast<int32_t>(uint_pair.first) - static_cast<int32_t>(uint_pair.second));
+template<typename T>
+constexpr T abs_difference_between_numbers(const std::pair<T, T> &pair_of_numbers) {
+    using SignedT = std::make_signed_t<T>;
+    return std::abs(static_cast<SignedT>(pair_of_numbers.first) - static_cast<SignedT>(pair_of_numbers.second));
 }
 
 /**
- * @brief Sorts two columns of unsigned integers.
+ * @brief Converts a vector of pairs of numbers into a pair of two vectors, where each vector has the numbers occuring in each pair in sorted order.
  *
- * @param locs A vector of pairs of unsigned integers.
- * @return A pair of vectors containing the sorted columns.
+ * @param pair_of_numbers A vector of pairs of numbers.
+ * @return A pair containing two vectors with sorted numbers.
  */
-constexpr TwoUnsignedIntColumns sorted_uint_columns(
-    const std::vector<std::pair<uint32_t, uint32_t> > &locs) {
-    std::vector<uint32_t> first;
-    std::vector<uint32_t> second;
-    for (const auto &[fst, snd]: locs) {
+template<typename T>
+constexpr std::pair<std::vector<T>, std::vector<T> > sorted_number_columns_from_pairs_t(const std::vector<std::pair<T, T> > &pair_of_numbers) {
+    std::vector<T> first;
+    std::vector<T> second;
+    for (const auto &[fst, snd]: pair_of_numbers) {
         first.push_back(fst);
         second.push_back(snd);
     }
@@ -46,28 +43,54 @@ constexpr TwoUnsignedIntColumns sorted_uint_columns(
 }
 
 /**
- * @brief Computes the accumulated distance between two columns of unsigned integers.
+* @brief Helper function to deduce the template argument for sorted_number_columns_from_pairs_t
+*/
+template<typename T>
+constexpr std::pair<std::vector<T>, std::vector<T> > sorted_number_columns_from_pairs(const std::vector<std::pair<T, T> > &pair_of_numbers) {
+    return sorted_number_columns_from_pairs_t<T>(pair_of_numbers);
+}
+
+/**
+ * @brief Computes the accumulated distance between two columns of numbers.
  *
- * @param two_uint_columns A pair of vectors containing the columns of unsigned integers.
+ * @param pair_of_number_vectors A pair of vectors containing the columns of numbers.
  * @return The accumulated distance.
  */
-constexpr uint32_t accumulated_distance(const TwoUnsignedIntColumns &two_uint_columns) {
-    return std::accumulate(two_uint_columns.first.begin(), two_uint_columns.first.end(), 0u,
-                           [&two_uint_columns, col_idx = 0u](const uint32_t sum, uint32_t val) mutable {
-                               return sum + abs_difference_between_uints({val, two_uint_columns.second[col_idx++]});
+template <typename T>
+constexpr T accumulated_distance_t(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
+    return std::accumulate(pair_of_number_vectors.first.begin(), pair_of_number_vectors.first.end(), 0u,
+                           [&pair_of_number_vectors, col_idx = 0u](const T sum, T val) mutable {
+                               return sum + abs_difference_between_numbers<T>({val, pair_of_number_vectors.second[col_idx++]});
                            });
 }
 
 /**
- * @brief Computes the accumulated similarity score between two columns of unsigned integers.
+ * @brief Helper function to deduce the template argument for accumulated_distance_t
+ */
+template<typename T>
+constexpr T accumulated_distance(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
+    return accumulated_distance_t<T>(pair_of_number_vectors);
+}
+
+/**
+ * @brief Computes the accumulated similarity score between two columns of numbers.
  *
- * @param two_uint_columns A pair of vectors containing the columns of unsigned integers.
+ * @param pair_of_number_vectors A pair of vectors containing the columns of numbers.
  * @return The accumulated similarity score.
  */
-constexpr uint32_t accumulated_similarity_score(const TwoUnsignedIntColumns &two_uint_columns) {
-    return std::accumulate(two_uint_columns.first.begin(), two_uint_columns.first.end(), 0u,
-                           [&two_uint_columns](const uint32_t sum, const uint32_t val) {
-                               return sum + val * std::ranges::count(two_uint_columns.second, val);
+template <typename T>
+constexpr T accumulated_similarity_score_t(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
+    return std::accumulate(pair_of_number_vectors.first.begin(), pair_of_number_vectors.first.end(), 0u,
+                           [&pair_of_number_vectors](const T sum, const T val) {
+                               return sum + val * std::ranges::count(pair_of_number_vectors.second, val);
                            });
+}
+
+/**
+ * @brief Helper function to deduce the template argument for accumulated_similarity_score_t
+ */
+template<typename T>
+constexpr T accumulated_similarity_score(const std::pair<std::vector<T>, std::vector<T> > &pair_of_number_vectors) {
+    return accumulated_similarity_score_t<T>(pair_of_number_vectors);
 }
 #endif //DAY1_HPP
