@@ -21,7 +21,7 @@ TEST_F(Day1Test, Sorts_Locations) {
         {1, 2}
     };
 
-    const auto [first, second] = sorted_number_columns_from_pairs(locs);
+    const auto [first, second] = sorted_vectors_from_number_pairs(locs);
 
     ASSERT_EQ(1, first[0]);
     ASSERT_EQ(2, first[1]);
@@ -42,7 +42,7 @@ TEST_F(Day1Test, Accumulates_Distance) {
         {3, 3},
     };
 
-    ASSERT_EQ(11, accumulated_distance<uint32_t>(sorted_number_columns_from_pairs(locs)));
+    ASSERT_EQ(11, accumulated_distance<uint32_t>(sorted_vectors_from_number_pairs(locs)));
 }
 
 TEST_F(Day1Test, Accumulates_Similarity) {
@@ -55,7 +55,7 @@ TEST_F(Day1Test, Accumulates_Similarity) {
         {3, 3},
     };
 
-    ASSERT_EQ(31, accumulated_similarity_score<uint32_t>(sorted_number_columns_from_pairs(locs)));
+    ASSERT_EQ(31, accumulated_similarity_score<uint32_t>(sorted_vectors_from_number_pairs(locs)));
 }
 
 int main(int ac, char *av[]) {

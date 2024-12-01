@@ -6,7 +6,10 @@
 #include <cstdio>
 
 int main() {
-    std::printf("Accumulated distance is: %u\n", accumulated_distance( sorted_number_columns_from_pairs(input)) );
-    std::printf("Similarity score: %u\n", accumulated_similarity_score( sorted_number_columns_from_pairs(input)) );
+    const auto sorted_columns = sorted_vectors_from_number_pairs(input);
+
+    std::printf("Accumulated distance is: %u\n", accumulated_distance( sorted_columns ));
+    std::printf("Similarity score: %u\n", accumulated_similarity_score( sorted_columns ));
+
     return 0;
 }

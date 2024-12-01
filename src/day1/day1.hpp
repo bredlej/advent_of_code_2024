@@ -29,7 +29,7 @@ constexpr T abs_difference_between_numbers(const std::pair<T, T> &pair_of_number
  * @return A pair containing two vectors with sorted numbers.
  */
 template<typename T>
-constexpr std::pair<std::vector<T>, std::vector<T> > sorted_number_columns_from_pairs_t(const std::vector<std::pair<T, T> > &pair_of_numbers) {
+constexpr std::pair<std::vector<T>, std::vector<T> > sorted_vectors_from_number_pairs_t(const std::vector<std::pair<T, T> > &pair_of_numbers) {
     std::vector<T> first;
     std::vector<T> second;
     for (const auto &[fst, snd]: pair_of_numbers) {
@@ -46,8 +46,8 @@ constexpr std::pair<std::vector<T>, std::vector<T> > sorted_number_columns_from_
 * @brief Helper function to deduce the template argument for sorted_number_columns_from_pairs_t
 */
 template<typename T>
-constexpr std::pair<std::vector<T>, std::vector<T> > sorted_number_columns_from_pairs(const std::vector<std::pair<T, T> > &pair_of_numbers) {
-    return sorted_number_columns_from_pairs_t<T>(pair_of_numbers);
+constexpr std::pair<std::vector<T>, std::vector<T> > sorted_vectors_from_number_pairs(const std::vector<std::pair<T, T> > &pair_of_numbers) {
+    return sorted_vectors_from_number_pairs_t<T>(pair_of_numbers);
 }
 
 /**
